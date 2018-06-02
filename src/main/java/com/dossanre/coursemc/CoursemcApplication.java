@@ -45,6 +45,8 @@ public class CoursemcApplication implements CommandLineRunner{
 		
 		categoryRepository.saveAll(Arrays.asList(cat1,cat2));
 		productRepository.saveAll(Arrays.asList(p1,p2,p3));
+		
+		System.out.println("Hello Github");
 	}
 	
 
