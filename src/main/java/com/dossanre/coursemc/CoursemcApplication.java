@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.dossanre.coursemc.domain.Address;
 import com.dossanre.coursemc.domain.Category;
 import com.dossanre.coursemc.domain.City;
+import com.dossanre.coursemc.domain.Client;
 import com.dossanre.coursemc.domain.Product;
 import com.dossanre.coursemc.domain.Province;
+import com.dossanre.coursemc.domain.enums.ClientType;
+import com.dossanre.coursemc.repositories.AddressRepository;
 import com.dossanre.coursemc.repositories.CategoryRepository;
 import com.dossanre.coursemc.repositories.CityRepository;
+import com.dossanre.coursemc.repositories.ClientRepository;
 import com.dossanre.coursemc.repositories.ProductRepository;
 import com.dossanre.coursemc.repositories.ProvinceRepository;
 
@@ -30,6 +35,13 @@ public class CoursemcApplication implements CommandLineRunner{
 	
 	@Autowired
 	private CityRepository cityRepository;
+	
+	@Autowired
+	private ClientRepository clientRepository;
+	
+	@Autowired
+	private AddressRepository addressRepository;
+	
 	
 	
 	public static void main(String[] args) {
@@ -72,6 +84,25 @@ public class CoursemcApplication implements CommandLineRunner{
 		// Save objects into database H2
 		provinceRepository.saveAll(Arrays.asList(prov1,prov2));
 		cityRepository.saveAll(Arrays.asList(city1,city2,city3));
+		
+		Client cli1 = new Client(null, "John Smith", "john@gmail.com","123456789",ClientType.INDIVIDUAL);
+		cli1.getPhones().addAll(Arrays.asList("6477011919","6477011920"));
+		
+		Address address1 = new Address(null,"215 Main Street","L6Y 1M6",city1,cli1);
+		Address address2 = new Address(null,"405 Engliton","M1T 7M8",city1,cli1);
+		
+		cli1.getAddresses().addAll(Arrays.asList(address1,address2));
+		
+		clientRepository.saveAll(Arrays.asList(cli1));
+		addressRepository.saveAll(Arrays.asList(address1,address2));
+		
+		/*Client cli2 = new Client(null, "John Smith", "john@gmail.com","123456789",ClientType.INDIVIDUAL);
+		cli1.getPhones().addAll(Arrays.asList("6477011919","6477011920"));
+		
+		Client cli3 = new Client(null, "John Smith", "john@gmail.com","123456789",ClientType.INDIVIDUAL);
+		cli1.getPhones().addAll(Arrays.asList("6477011919","6477011920"));*/
+		
+		
 
 	}
 	
