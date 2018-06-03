@@ -12,7 +12,7 @@ import com.dossanre.coursemc.domain.Category;
 import com.dossanre.coursemc.services.CategoryService;
 
 @RestController
-@RequestMapping(value="/categories")
+@RequestMapping(value="/category")
 public class CategoryResource {
 	
 	@Autowired

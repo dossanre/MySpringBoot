@@ -30,11 +30,9 @@ public class Order implements Serializable {
 	@JsonFormat(pattern="MM/dd/yyyy HH:mm")
 	private Date hourOrder; 
 	
-	//@JsonManagedReference
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="order")
 	private Payment payment;
 	
-	//@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="client_id")
 	private Client client;

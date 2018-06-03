@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
-
 @Entity
 public class OrderItem implements Serializable {
 	

@@ -23,7 +23,6 @@ public abstract class Payment implements Serializable {
 	private Integer id; 
 	private Integer paymentState;
 	
-	///@JsonBackReference
 	@JsonIgnore 
 	@OneToOne
 	@JoinColumn(name="order_id")
