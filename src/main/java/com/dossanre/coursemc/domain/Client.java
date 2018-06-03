@@ -15,7 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.dossanre.coursemc.domain.enums.ClientType;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Client implements Serializable {
@@ -30,7 +31,6 @@ public class Client implements Serializable {
 	private String sinOrCnr;
 	private Integer type;
 	
-	@JsonManagedReference
 	@OneToMany(mappedBy="client")
 	private List<Address> addresses = new ArrayList<>();
 	
@@ -38,6 +38,7 @@ public class Client implements Serializable {
 	@CollectionTable(name="Phones")
 	private Set<String> phones = new HashSet<>();
 	
+	@JsonIgnore 
 	@OneToMany(mappedBy="client")
 	private List<Order> orders = new ArrayList<>();
 	

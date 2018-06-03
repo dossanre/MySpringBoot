@@ -5,13 +5,16 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.dossanre.coursemc.domain.enums.PaymentState;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class BilledPayment extends Payment{
 
 	private static final long serialVersionUID = 1L;
 	
+	@JsonFormat(pattern="MM/dd/yyyy HH:mm")
 	private Date expireDate; 
+	@JsonFormat(pattern="MM/dd/yyyy HH:mm")
 	private Date paymentDate;
 	
 	public BilledPayment() {}

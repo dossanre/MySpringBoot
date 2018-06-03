@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "Order_table") // I had to use this annotation because I could not create a table named ORDER.  ORDER[*] ERROR. 
 public class Order implements Serializable {
@@ -25,11 +27,14 @@ public class Order implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	@JsonFormat(pattern="MM/dd/yyyy HH:mm")
 	private Date hourOrder; 
 	
+	//@JsonManagedReference
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="order")
 	private Payment payment;
 	
+	//@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="client_id")
 	private Client client;
