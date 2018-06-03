@@ -1,5 +1,6 @@
 package com.dossanre.coursemc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,16 +9,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.dossanre.coursemc.domain.Address;
+import com.dossanre.coursemc.domain.BilledPayment;
+import com.dossanre.coursemc.domain.CardPayment;
 import com.dossanre.coursemc.domain.Category;
 import com.dossanre.coursemc.domain.City;
 import com.dossanre.coursemc.domain.Client;
+import com.dossanre.coursemc.domain.Order;
+import com.dossanre.coursemc.domain.Payment;
 import com.dossanre.coursemc.domain.Product;
 import com.dossanre.coursemc.domain.Province;
 import com.dossanre.coursemc.domain.enums.ClientType;
+import com.dossanre.coursemc.domain.enums.PaymentState;
 import com.dossanre.coursemc.repositories.AddressRepository;
 import com.dossanre.coursemc.repositories.CategoryRepository;
 import com.dossanre.coursemc.repositories.CityRepository;
 import com.dossanre.coursemc.repositories.ClientRepository;
+import com.dossanre.coursemc.repositories.OrderRepository;
+import com.dossanre.coursemc.repositories.PaymentRepository;
 import com.dossanre.coursemc.repositories.ProductRepository;
 import com.dossanre.coursemc.repositories.ProvinceRepository;
 
@@ -42,7 +50,11 @@ public class CoursemcApplication implements CommandLineRunner{
 	@Autowired
 	private AddressRepository addressRepository;
 	
+	@Autowired
+	private OrderRepository orderRepository;
 	
+	@Autowired
+	private PaymentRepository paymentRepository;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(CoursemcApplication.class, args);
@@ -96,14 +108,21 @@ public class CoursemcApplication implements CommandLineRunner{
 		clientRepository.saveAll(Arrays.asList(cli1));
 		addressRepository.saveAll(Arrays.asList(address1,address2));
 		
-		/*Client cli2 = new Client(null, "John Smith", "john@gmail.com","123456789",ClientType.INDIVIDUAL);
-		cli1.getPhones().addAll(Arrays.asList("6477011919","6477011920"));
+		// New Order
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+		Order order1 = new Order(null, sdf.parse("06/02/2018 18:42"),cli1, address1 );
+		Order order2 = new Order(null, sdf.parse("06/02/2018 19:40"),cli1, address2 );
 		
-		Client cli3 = new Client(null, "John Smith", "john@gmail.com","123456789",ClientType.INDIVIDUAL);
-		cli1.getPhones().addAll(Arrays.asList("6477011919","6477011920"));*/
+		Payment payment1 = new CardPayment(null, PaymentState.PAYED, order1, 6);
+		order1.setPayment(payment1);
 		
+		Payment payment2 = new BilledPayment(null, PaymentState.PENDING, order2, sdf.parse("06/02/2018 20:00"), null);
+		order2.setPayment(payment2);
 		
-
+		cli1.getOrders().addAll(Arrays.asList(order1,order2));
+		
+		orderRepository.saveAll(Arrays.asList(order1, order2));
+		paymentRepository.saveAll(Arrays.asList(payment1, payment2));
 	}
 	
 
