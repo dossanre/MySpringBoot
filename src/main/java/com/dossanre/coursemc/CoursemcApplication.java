@@ -69,7 +69,7 @@ public class CoursemcApplication implements CommandLineRunner{
 	public void run(String... args) throws Exception {
 		
 		// Create objects of class Category and Product and fill them into the H2 database
-		Category cat1 = new Category(null, "Computer");
+		Category cat1 = new Category(null, "Electronics");
 		Category cat2 = new Category(null, "Office");
 		
 		Product product1 = new Product(null, "Laptop", 2000.00);
