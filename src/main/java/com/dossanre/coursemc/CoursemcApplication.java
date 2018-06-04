@@ -71,6 +71,11 @@ public class CoursemcApplication implements CommandLineRunner{
 		// Create objects of class Category and Product and fill them into the H2 database
 		Category cat1 = new Category(null, "Electronics");
 		Category cat2 = new Category(null, "Office");
+		Category cat3 = new Category(null, "Home Accessories");
+		Category cat4 = new Category(null, "Furniture");
+		Category cat5 = new Category(null, "Sport");
+		Category cat6 = new Category(null, "Baby");
+		Category cat7 = new Category(null, "Health, Beauty & Pharmacy");
 		
 		Product product1 = new Product(null, "Laptop", 2000.00);
 		Product product2 = new Product(null, "Printer", 1000.00);
@@ -84,7 +89,7 @@ public class CoursemcApplication implements CommandLineRunner{
 		product3.getCategories().addAll(Arrays.asList(cat1));
 		
 		// Save objects into database H2
-		categoryRepository.saveAll(Arrays.asList(cat1,cat2));
+		categoryRepository.saveAll(Arrays.asList(cat1,cat2,cat3,cat4,cat5,cat6,cat7));
 		productRepository.saveAll(Arrays.asList(product1,product2,product3));
 		
 		// Create objects of class Province and Cities and fill them into the H2 database
