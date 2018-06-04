@@ -2,6 +2,8 @@ package com.dossanre.coursemc.resources;
 
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.dossanre.coursemc.domain.Category;
+import com.dossanre.coursemc.dto.CategoryDTO;
 import com.dossanre.coursemc.services.CategoryService;
 
 @RestController
@@ -36,18 +39,25 @@ public class CategoryResource {
 				.path("/{id}").buildAndExpand(categ.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
+	// Update Category
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
 	public ResponseEntity<Void> update(@RequestBody Category categ, @PathVariable Integer id){
 		categ.setId(id);
 		categ = service.update(categ);
 		return ResponseEntity.noContent().build();
 	}
-	
+	// Delete Category
 	@RequestMapping(value="/{id}",method=RequestMethod.DELETE)
 	public ResponseEntity<Void> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
 
+	@RequestMapping(method=RequestMethod.GET)
+	public ResponseEntity<List<CategoryDTO>> findAll(){
+		List<Category> listCateg = service.findAll();
+		List<CategoryDTO> listDto = listCateg.stream().map(obj-> new CategoryDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+	}
+	
 }
