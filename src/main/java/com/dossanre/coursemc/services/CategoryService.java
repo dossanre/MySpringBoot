@@ -3,12 +3,13 @@ package com.dossanre.coursemc.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.dossanre.coursemc.domain.Category;
 import com.dossanre.coursemc.repositories.CategoryRepository;
+import com.dossanre.coursemc.services.exceptions.DataIntegrityException;
 import com.dossanre.coursemc.services.exceptions.ObjectNotFoundException;
-
 
 @Service
 public class CategoryService {
@@ -32,6 +33,16 @@ public class CategoryService {
 	public Category update(Category categ) {
 		find(categ.getId());
 		return repo.save(categ);
+	}
+	
+	public void delete(Integer id) {
+		find(id);
+		try {
+		repo.deleteById(id);
+		}
+		catch(DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Can not delete categories with products.");
+		}
 	}
 
 }
