@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -35,7 +37,8 @@ public class CategoryResource {
 	
 	// Insert Category into Database
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Category categ){
+	public ResponseEntity<Void> insert(@Valid @RequestBody CategoryDTO categDto){
+		Category categ = service.fromDTO(categDto);
 		categ = service.insert(categ);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(categ.getId()).toUri();
@@ -43,7 +46,8 @@ public class CategoryResource {
 	}
 	// Update Category
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Category categ, @PathVariable Integer id){
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoryDTO categDto, @PathVariable Integer id){
+		Category categ = service.fromDTO(categDto);
 		categ.setId(id);
 		categ = service.update(categ);
 		return ResponseEntity.noContent().build();
@@ -63,7 +67,7 @@ public class CategoryResource {
 	}
 	// Using GET 
 	//http://localhost:8080/category/page?linesPerPage=3
-	//http://localhost:8080/category/page?linesPerPage=3&page=1&direction=DESC
+	//http://localhost:8080/category/page?page=1&linesPerPage=3&direction=DESC
 	@RequestMapping(value="/page",method=RequestMethod.GET)
 	public ResponseEntity<Page<CategoryDTO>> findPage(
 			@RequestParam(value="page", defaultValue="0") Integer page,
