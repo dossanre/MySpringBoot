@@ -2,17 +2,17 @@ package com.dossanre.coursemc.domain;
 
 import javax.persistence.Entity;
 
-import com.dossanre.coursemc.domain.enums.PaymentState;
+import com.dossanre.coursemc.domain.enums.PaymentStatus;
 @Entity
-public class CardPayment extends Payment{
+public class PaymentCreditCard extends Payment{
 
 	private static final long serialVersionUID = 1L;
 	
 	private Integer installments;
 	
-	public CardPayment() {}
+	public PaymentCreditCard() {}
 
-	public CardPayment(Integer id, PaymentState paymentState, Order order,Integer installments) {
+	public PaymentCreditCard(Integer id, PaymentStatus paymentState, Order order,Integer installments) {
 		super(id, paymentState, order);
 		this.installments = installments;
 	}

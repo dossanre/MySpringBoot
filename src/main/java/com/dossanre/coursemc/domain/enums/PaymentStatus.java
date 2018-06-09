@@ -1,6 +1,6 @@
 package com.dossanre.coursemc.domain.enums;
 
-public enum PaymentState {
+public enum PaymentStatus {
 
 	PENDING(1,"Pending"),
 	PAYED(2, "Payed"),
@@ -9,7 +9,7 @@ public enum PaymentState {
 	private int cod; 
 	private String description; 
 	
-	private PaymentState(int cod, String description) {
+	private PaymentStatus(int cod, String description) {
 		this.cod=cod;
 		this.description = description;
 	}
@@ -22,12 +22,12 @@ public enum PaymentState {
 		return description;
 	}
 	
-	public static PaymentState toEnum(Integer cod) {
+	public static PaymentStatus toEnum(Integer cod) {
 		
 		if(cod == null) {
 			return null;
 		}
-		for (PaymentState payment : PaymentState.values()) {
+		for (PaymentStatus payment : PaymentStatus.values()) {
 			if(cod.equals(payment.cod)) {
 				return payment;
 			}

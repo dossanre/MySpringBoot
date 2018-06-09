@@ -4,11 +4,11 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 
-import com.dossanre.coursemc.domain.enums.PaymentState;
+import com.dossanre.coursemc.domain.enums.PaymentStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class BilledPayment extends Payment{
+public class PaymentInvoice extends Payment{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -17,9 +17,9 @@ public class BilledPayment extends Payment{
 	@JsonFormat(pattern="MM/dd/yyyy HH:mm")
 	private Date paymentDate;
 	
-	public BilledPayment() {}
+	public PaymentInvoice() {}
 
-	public BilledPayment(Integer id, PaymentState paymentState, Order order, Date expireDate, Date paymentDate ) {
+	public PaymentInvoice(Integer id, PaymentStatus paymentState, Order order, Date expireDate, Date paymentDate ) {
 		super(id, paymentState, order);
 		this.expireDate = expireDate;
 		this.paymentDate = paymentDate;

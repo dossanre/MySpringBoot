@@ -9,8 +9,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.dossanre.coursemc.domain.Address;
-import com.dossanre.coursemc.domain.BilledPayment;
-import com.dossanre.coursemc.domain.CardPayment;
+import com.dossanre.coursemc.domain.PaymentInvoice;
+import com.dossanre.coursemc.domain.PaymentCreditCard;
 import com.dossanre.coursemc.domain.Category;
 import com.dossanre.coursemc.domain.City;
 import com.dossanre.coursemc.domain.Client;
@@ -20,7 +20,7 @@ import com.dossanre.coursemc.domain.Payment;
 import com.dossanre.coursemc.domain.Product;
 import com.dossanre.coursemc.domain.Province;
 import com.dossanre.coursemc.domain.enums.ClientType;
-import com.dossanre.coursemc.domain.enums.PaymentState;
+import com.dossanre.coursemc.domain.enums.PaymentStatus;
 import com.dossanre.coursemc.repositories.AddressRepository;
 import com.dossanre.coursemc.repositories.CategoryRepository;
 import com.dossanre.coursemc.repositories.CityRepository;
@@ -123,10 +123,10 @@ public class CoursemcApplication implements CommandLineRunner{
 		Order order1 = new Order(null, sdf.parse("06/02/2018 18:42"),cli1, address1 );
 		Order order2 = new Order(null, sdf.parse("06/02/2018 19:40"),cli1, address2 );
 		
-		Payment payment1 = new CardPayment(null, PaymentState.PAYED, order1, 6);
+		Payment payment1 = new PaymentCreditCard(null, PaymentStatus.PAYED, order1, 6);
 		order1.setPayment(payment1);
 		
-		Payment payment2 = new BilledPayment(null, PaymentState.PENDING, order2, sdf.parse("06/02/2018 20:00"), null);
+		Payment payment2 = new PaymentInvoice(null, PaymentStatus.PENDING, order2, sdf.parse("06/02/2018 20:00"), null);
 		order2.setPayment(payment2);
 		
 		cli1.getOrders().addAll(Arrays.asList(order1,order2));

@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
-import com.dossanre.coursemc.domain.enums.PaymentState;
+import com.dossanre.coursemc.domain.enums.PaymentStatus;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
@@ -21,7 +21,7 @@ public abstract class Payment implements Serializable {
 
 	@Id
 	private Integer id; 
-	private Integer paymentState;
+	private Integer paymentStatus;
 	
 	@JsonIgnore 
 	@OneToOne
@@ -31,10 +31,10 @@ public abstract class Payment implements Serializable {
 	
 	public Payment() {}
 
-	public Payment(Integer id, PaymentState paymentState, Order order) {
+	public Payment(Integer id, PaymentStatus paymentStatus, Order order) {
 		super();
 		this.id = id;
-		this.paymentState = paymentState.getCod();
+		this.paymentStatus =  (paymentStatus==null)? null : paymentStatus.getCod();
 		this.order = order;
 	}
 
@@ -46,12 +46,12 @@ public abstract class Payment implements Serializable {
 		this.id = id;
 	}
 
-	public PaymentState getPaymentState() {
-		return PaymentState.toEnum(paymentState);
+	public PaymentStatus getPaymentState() {
+		return PaymentStatus.toEnum(paymentStatus);
 	}
 
-	public void setPaymentState(PaymentState paymentState) {
-		this.paymentState = paymentState.getCod();
+	public void setPaymentState(PaymentStatus paymentStatus) {
+		this.paymentStatus = paymentStatus.getCod();
 	}
 
 	public Order getOrder() {
